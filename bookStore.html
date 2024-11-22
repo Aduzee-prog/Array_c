@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+</head>
+<body>
+    <div class="col-lg-7 col-10 mx-auto mt-lg-5 mt-3 shadow-sm rounded-3 text-center p-lg-3 p-2">
+        <h3 class="text-center text-primary text-decoration-underline">Book Store</h3>
+        <p class="alert alert-danger p-0" id="errorMsg" style="display: none;">Kindly fill in the input</p>
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+            <label for="floatingInput">Enter Book</label>
+          </div> 
+        <button onclick="addBook()" class="btn btn-primary btn-sm w-100 my-lg-4 my-2">Add Book</button>
+        <div id="displayBook" class="my-4">
+            <p class="alert alert-secondary p-2">No Book Added Yet</p>
+        </div>
+        <button onclick="editAny()" class="btn btn-success">Edit Any</button>
+        <button onclick="deleteAny()" class="btn btn-danger">Delete Any</button>
+    </div>
+</body>
+<script>
+  function toast(message, color='red', duration=3000){
+    Toastify({
+  text: message,
+  duration: duration,
+  destination: "https://github.com/apvarun/toastify-js",
+  newWindow: true,
+  close: true,
+  gravity: "top", // `top` or `bottom`
+  position: "right", // `left`, `center` or `right`
+  stopOnFocus: true, // Prevents dismissing of toast on hover
+  style: {
+    background: "color",
+  },
+  onClick: function(){} // Callback after click
+}).showToast();
+  }
+
+
+    var allBook = []
+    function addBook(){
+       if (floatingInput.value == ''){
+        errorMsg.style.display = 'block'
+       } else  {
+        errorMsg.style.display = 'none'
+        allBook.push(floatingInput.value)
+        console.log(allBook);
+        document.getElementById('floatingInput').value = '' //or book.value = ''
+        displayOurBook()
+       }  
+    }
+    function deleteAny(){
+        if(allBook.length < 1){
+            alert("Nothing to delete")
+        }else {
+            var indexToDelete = Number(prompt('Enter which number to delete'))
+            console.log(indexToDelete);
+            if(indexToDelete > allBook.length){
+                alert('Invalid number entered')
+            }else{
+                allBook.splice(indexToDelete-1,1)
+                displayOurBook()
+            }
+            
+        }
+    }
+    function editAny(){
+        if(allBook.length < 1){
+            alert("Nothing to Edit")
+        }else {
+            var indexToEdit = Number(prompt('Enter which number to Edit'))
+            console.log(indexToReplace);
+            if(indexToEdit > allBook.length){
+                alert('Invalid number entered')
+            }else{
+                var indexToReplace = prompt('Enter the word to Replace')
+                allBook.splice(indexToEdit-1,1,indexToReplace)
+                displayOurBook()
+            }
+            
+        }
+    }
+    function displayOurBook(){
+        displayBook.innerHTML = ''
+        displayBook.innerHTML = `<table  class="table table-bordered table-striped table-secondary" id="table">
+                                 <th>S/N</th> 
+                                 <th>GOODS</th> 
+                                 <th>Action</th>
+                                 </table>`
+        for(var i=0; i<allBook.length; i++){
+            console.log(allBook[i]);
+            table.innerHTML +=
+            `<td>${i+1}</td>  
+             <td class="bg-dark">${allBook[i]}</td>
+             <td>
+                  <button onclick="editAny()" class="btn btn-success">Edit Any</button>
+                  <button onclick="deleteAny()" class="btn btn-danger">Delete Any</button>
+             <td>`    
+            
+        }
+    }
+    
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+</html>
